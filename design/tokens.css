@@ -1,0 +1,71 @@
+/* ==========================================================================
+   Quasi-Newton BFGS Visualizer — Design Tokens
+   Fonte: Figma · https://www.figma.com/design/fdsgvMJI7q5VjkUam8r6jF/Quasi-Newton-BFGS-—-Visualizador-v2?node-id=0-1&t=F4MKRl6a6MUneCnd-1
+   ========================================================================== */
+
+:root {
+  /* ── Backgrounds ────────────────────────────────────────────────────── */
+  --bg:           #060608;   /* fundo raiz da janela */
+  --surface:      #0c0c0f;   /* superfície leve */
+  --card:         #101014;   /* topbar, sidebar, cards */
+  --input:        #16161b;   /* campos de input e select */
+  --elevated:     #1b1b22;   /* elementos sobre card (hover, secondary btn) */
+
+  /* ── Bordas ──────────────────────────────────────────────────────────── */
+  --border:       #282832;
+
+  /* ── Texto ───────────────────────────────────────────────────────────── */
+  --fg:           #eaeaf2;   /* texto principal */
+  --muted-fg:     #78788c;   /* labels, placeholders, meta */
+
+  /* ── Cores de destaque ───────────────────────────────────────────────── */
+  --primary:      #3dcc8f;   /* verde — botão principal, active, badges */
+  --primary-dim:  rgba(61, 204, 143, 0.12);   /* fundo do btn-grafica */
+  --primary-ring: rgba(61, 204, 143, 0.40);   /* borda do btn-grafica */
+
+  /* ── Cores dos gráficos ──────────────────────────────────────────────── */
+  --chart-green:  #3dcc8f;   /* curva f(x) */
+  --chart-blue:   #5baaf4;   /* curva x₁ */
+  --chart-amber:  #fcbc5e;   /* curva x₂ */
+  --chart-purple: #bf7af9;   /* curva ‖∇f‖ */
+  --chart-teal:   #43e8c8;   /* marcador ponto ótimo */
+  --chart-yellow: #ffd166;   /* marcador ponto inicial */
+  --chart-violet: #7b61ff;   /* trajetória BFGS */
+
+  /* ── Status ──────────────────────────────────────────────────────────── */
+  --status-waiting:    var(--muted-fg);
+  --status-running:    var(--chart-amber);
+  --status-converged:  var(--primary);
+  --status-error:      #ef5350;
+
+  /* ── Tipografia ──────────────────────────────────────────────────────── */
+  --font-family:   'Inter', sans-serif;
+
+  --text-app-title:  700 17px/1.2 var(--font-family);
+  --text-h2:         600 15px/1.3 var(--font-family);
+  --text-card-value: 600 15px/1.2 var(--font-family);
+  --text-label:      500 11px/1.4 var(--font-family);
+  --text-body:       400 13px/1.5 var(--font-family);
+  --text-caption:    400 11px/1.4 var(--font-family);
+  --text-tab:        600 12px/1 var(--font-family);
+  --text-btn:        600 13px/1 var(--font-family);
+
+  /* ── Espaçamento base ────────────────────────────────────────────────── */
+  --gap-xs:  4px;
+  --gap-sm:  8px;
+  --gap-md:  12px;
+  --gap-lg:  16px;
+  --gap-xl:  20px;
+  --gap-2xl: 24px;
+
+  /* ── Border Radius ───────────────────────────────────────────────────── */
+  --r-input: 6px;    /* inputs, selects */
+  --r-btn:   8px;    /* botões */
+  --r-card:  10px;   /* cards, chart cards */
+  --r-pill:  14px;   /* badges, status pills */
+
+  /* ── Dimensões de layout ─────────────────────────────────────────────── */
+  --topbar-h:      72px;
+  --sidebar-w:     300px;
+  --left-nav-w:    180px;   /* nav da Janela Solução Gráfica */
+}
