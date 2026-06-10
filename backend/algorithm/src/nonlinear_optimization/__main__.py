@@ -1,3 +1,5 @@
+"""Nonlinear optimization entry point"""
+
 from time import time
 
 from nonlinear_optimization.methods import quasi_newton
@@ -8,6 +10,11 @@ INITIAL_POINTS = [1e32, 2]
 
 
 def main() -> int:
+    """Executar o algoritmo de otimização Quasi-Newton.
+
+    Returns:
+        Um inteiro para ser consumido pelo SytemExit.
+    """
     start_time = time()
 
     best_point = quasi_newton(

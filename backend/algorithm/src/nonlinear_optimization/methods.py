@@ -11,6 +11,16 @@ from nonlinear_optimization.functions import f_x, gradient
 def quasi_newton(
     initial_points: Iterable[float], tol: float = 1e-6, max_iter: int = 10
 ) -> tuple[Any, npt.NDArray[np.float64]]:
+    """Busca o mínimo de uma dada função a partir do algoritmo BFGS Quasi-Newton.
+
+    Args:
+        initial_points: pontos iniciais utilizados no início da otimização.
+        tol: valor máximo que a norma do gradiente pode ter para que a busca continue sendo executada. Defaults to 1e-6.
+        max_iter: número de iterações máxima que a busca deve executar. Defaults to 10.
+
+    Returns:
+        o valor ótimo da função objetivo e os pontos x1 e x2 correspondentes.
+    """
     _, _, _, equation = f_x()
     xk = np.asarray(initial_points, dtype=np.float64)
     n = xk.size

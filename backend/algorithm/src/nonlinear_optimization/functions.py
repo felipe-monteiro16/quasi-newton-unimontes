@@ -1,3 +1,5 @@
+"""Definição da função objetivo e de seu gradiente"""
+
 from typing import Any
 
 import numpy as np
@@ -6,6 +8,11 @@ import sympy as sp
 
 
 def f_x() -> tuple[sp.Symbol, sp.Symbol, Any, Any]:
+    """Prepara a função objetivo para ser utilizada posteriormente tanto no formato sympy quando numpy.
+
+    Returns:
+        As variáveis simbólicas de x1 e x2. A assinatura da função f(x) no formato sympy ou numpy.
+    """
     x1_symbol = sp.Symbol("x1")
     x2_symbol = sp.Symbol("x2")
     term1 = ((x1_symbol - (5 * 5.7 / 5)) ** 2) / 4
@@ -16,6 +23,14 @@ def f_x() -> tuple[sp.Symbol, sp.Symbol, Any, Any]:
 
 
 def gradient(points: npt.NDArray[np.float64]) -> npt.NDArray[np.float64]:
+    """Calcula o gradiente da função f_x() considerando os pontos dados.
+
+    Args:
+        points: uma array com os valores de x1 e X2.
+
+    Returns:
+        Uma array com os respectivos valores das derivadas parciais de f(x) em relação a x1 e x2.
+    """
     x1_symbol, x2_symbol, sp_equation, _ = f_x()
     x1, x2 = points.flatten()
     diff_y_x1 = sp.diff(sp_equation, x1_symbol)
