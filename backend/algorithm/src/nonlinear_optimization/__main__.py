@@ -1,6 +1,6 @@
 """Nonlinear optimization entry point"""
 
-from time import time
+import json
 
 from nonlinear_optimization.methods import quasi_newton
 
@@ -15,13 +15,12 @@ def main() -> int:
     Returns:
         Um inteiro para ser consumido pelo SytemExit.
     """
-    start_time = time()
 
-    best_point = quasi_newton(
+    result_dict = quasi_newton(
         initial_points=INITIAL_POINTS, tol=ERROR_THRESHOLD, max_iter=N_ITER
     )
-    print(best_point)
-    print(time() - start_time)
+    with open("./optimization_result.json", "w") as json_file:
+        json.dump(result_dict, json_file)
     return 0
 
 
