@@ -1,0 +1,54 @@
+from collections.abc import Iterable
+from copy import deepcopy
+from typing import Any
+
+import numpy as np
+import numpy.typing as npt
+
+from nonlinear_optimization.functions import f_x, gradient
+
+
+def quasi_newton(
+    initial_points: Iterable[float], tol: float = 1e-6, max_iter: int = 10
+) -> tuple[Any, npt.NDArray[np.float64]]:
+    _, _, _, equation = f_x()
+    xk = np.asarray(initial_points, dtype=np.float64)
+    n = xk.size
+    hinv_aprox = np.eye(n)  # Inversa da hessiana inicial
+    gradk = gradient(xk)
+
+    for k in range(max_iter):
+        if np.linalg.norm(gradk) < tol:
+            print(f"Convergiu em {k} iterações")
+            return equation(*xk), deepcopy(xk)
+
+        # Direção de busca
+        direction = np.asarray(-hinv_aprox @ gradk.T).reshape((1, 2))
+
+        # Busca linear do parâmetro alpha (Backtracking simples)
+        alpha = 1.0
+        c = 1e-4
+        while (
+            equation(*(xk + alpha * direction.reshape(2)))
+            > equation(*xk) + c * alpha * gradk @ direction.T
+        ):
+            alpha *= 0.5
+
+        # Atualização de posição e gradiente
+        xk_new = xk + alpha * direction.reshape(2)
+        grad_new = gradient(xk_new)
+        s = xk_new - xk
+        y = grad_new - gradk
+
+        # Atualização BFGS
+        rho = 1.0 / (y @ s.T)
+        idt = np.eye(n)
+
+        # Forma padrão de Sherman-Morrison
+        hinv_aprox = (idt - rho * np.outer(s, y)) @ hinv_aprox @ (
+            idt - rho * np.outer(y, s)
+        ) + rho * np.outer(s, s)
+
+        xk, gradk = xk_new, grad_new
+
+    return equation(*xk), deepcopy(xk)

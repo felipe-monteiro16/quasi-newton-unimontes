@@ -1,0 +1,116 @@
+[project]
+name = "nonlinear_optimization"
+version = "0.1.0"
+description = "An application that finds the minimum/maximum value of a function."
+authors = [
+    {name = "Davi"}
+]
+requires-python = ">=3.11"
+dependencies = [
+    "numpy (>=2.4.4,<3.0.0)",
+    "sympy (>=1.14.0,<2.0.0)",
+    "jax (>=0.10.1,<0.11.0)",
+]
+
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+
+[dependency-groups]
+test = [
+    "pytest (>=9.0.3,<10.0.0)",
+    "pytest-cov (>=7.1.0,<8.0.0)"
+]
+dev = [
+    "ruff (>=0.15.12,<0.16.0)",
+    "mypy (>=2.1.0,<3.0.0)"
+]
+
+
+
+[tool.ruff]
+# 1. Global Rules
+# The standard Enterprise line length (Matches the 'Black' formatter standard)
+line-length = 88
+
+# IMPORTANT: Match this to your [project] requires-python = ">=3.11"
+target-version = "py311"
+
+# Directories to exclude from linting/formatting
+exclude = [
+    ".bzr",
+    ".direnv",
+    ".eggs",
+    ".git",
+    ".git-rewrite",
+    ".hg",
+    ".mypy_cache",
+    ".nox",
+    ".pants.d",
+    ".pytype",
+    ".ruff_cache",
+    ".svn",
+    ".tox",
+    ".venv",
+    "__pypackages__",
+    "__pycache__",
+    "_build",
+    "buck-out",
+    "build",
+    "dist",
+    "node_modules",
+    "venv",
+]
+
+[tool.ruff.lint]
+# 2. The Strict Enterprise Rule Sets
+select = [
+    "E",    # pycodestyle errors (spacing, syntax)
+    "W",    # pycodestyle warnings
+    "F",    # pyflakes (unused variables, undefined names)
+    "I",    # isort (automatically group and sort imports)
+    "UP",   # pyupgrade (force modern Python 3.11 syntax)
+    "N",    # pep8-naming (force standard variable/class naming)
+    "B",    # flake8-bugbear (finds common logic bugs)
+    "C4",   # flake8-comprehensions (forces efficient list/dict comprehensions)
+    "SIM",  # flake8-simplify (suggests simpler ways to write complex code)
+    "RUF", # Ruff-specific rules
+]
+
+# Rules to explicitly ignore
+ignore = [
+    "E501", # Line too long (Let the formatter handle line wrapping, not the linter)
+]
+
+# Allow Autofix for all enabled rules
+fixable = ["ALL"]
+unfixable = []
+
+[tool.ruff.format]
+# 3. Formatting Rules
+quote-style = "double"
+indent-style = "space"
+skip-magic-trailing-comma = false
+line-ending = "auto"
+
+# Enable auto-formatting of code examples inside your docstrings
+docstring-code-format = true
+docstring-code-line-length = "dynamic"
+
+[tool.ruff.lint.per-file-ignores]
+# 4. Context-Specific Rules
+# __init__.py files are allowed to have unused imports (used for exposing APIs)
+"__init__.py" = ["F401"]
+# Test files are allowed to use 'assert' statements and private variable access
+"tests/**/*.py" = ["S101", "SLF001"]
+
+
+[tool.mypy]
+python_version = "3.11"
+strict = true
+# ... (your other settings) ...
+
+# Add this to help Mypy understand Numpy perfectly
+plugins = ["numpy.typing.mypy_plugin"]
