@@ -1,6 +1,7 @@
 <script setup>
 import { computed, reactive, ref } from 'vue'
 import { runQuasiNewton } from './services/optimizerApi'
+import { ConvergenceChart } from './components'
 
 const initialForm = {
   objectiveFunction: 'x₁² + 2x₂² - 2x₁x₂ + 4x₁ - 6x₂',
@@ -20,11 +21,30 @@ const errorMessage = ref('')
 const hasResult = computed(() => Boolean(result.value))
 
 const iterations = computed(() => {
-  if (!Array.isArray(result.value?.iterations)) {
-    return []
-  }
 
-  return result.value.iterations
+  if (!result.value) return []
+  
+  const xIter = result.value.X_iteracoes ?? []
+  const fIter = result.value.f_iteracoes ?? []
+
+  return xIter.map((point,index)=>({
+      k: index + 1,
+      x1: point[0],
+      x2: point[1],
+      fx: fIter[index]
+  }))
+})
+
+const chartData = computed(()=>{
+  
+  if(!result.value) return null
+
+  return {
+    xOtimo: result.value.X_otimo,
+    fOtimo: result.value.f_otimo,
+    xIteracoes: result.value.X_iteracoes,
+    fIteracoes: result.value.f_iteracoes
+  }
 })
 
 const statusLabel = computed(() => {
@@ -384,53 +404,9 @@ function resetForm() {
 
           <article class="chart-card">
             <h3>{{ chartTitle }}</h3>
-
-            <div v-if="activeView !== 'table'" class="visual-stage">
-              <svg class="surface-visual" viewBox="0 0 520 300" aria-hidden="true">
-                <path class="axis" d="M190 220V82" />
-                <path class="axis" d="M190 220h170" />
-                <path class="axis" d="M190 220 90 170" />
-                <path class="grid-line" d="M110 170h210" />
-                <path class="grid-line" d="M130 180h210" />
-                <path class="grid-line" d="M150 190h210" />
-                <path class="grid-line" d="M170 200h210" />
-                <path class="grid-line" d="M120 160 240 220" />
-                <path class="grid-line" d="M150 150 270 210" />
-                <path class="grid-line" d="M180 140 300 200" />
-                <path class="surface-fill" d="M125 174c48-52 85-65 123-27 35 35 62 23 88-28v61c-48 20-91 24-128 5-32-17-59-19-83-11Z" />
-                <path class="surface-line" d="M110 158c44-82 94-67 130-29 44 46 79 14 96-45" />
-                <path class="surface-line thin" d="M140 168c42-60 80-48 114-15 32 31 63 15 82-26" />
-                <circle class="opt-point" cx="270" cy="118" r="7" />
-                <text x="180" y="80">f</text>
-                <text x="360" y="238">x₁</text>
-                <text x="98" y="248">x₂</text>
-              </svg>
-              <p>Superfície f(x₁, x₂) com eixos x₁, x₂ e f(x₁, x₂)</p>
-            </div>
-
-            <div v-else-if="iterations.length > 0" class="table-wrap">
-              <table>
-                <thead>
-                  <tr>
-                    <th>k</th>
-                    <th>x₁</th>
-                    <th>x₂</th>
-                    <th>f(x)</th>
-                    <th>||∇f||</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr v-for="(item, index) in iterations" :key="index">
-                    <td>{{ item.k ?? index }}</td>
-                    <td>{{ formatNumber(item.x1 ?? item.x?.[0]) || '-' }}</td>
-                    <td>{{ formatNumber(item.x2 ?? item.x?.[1]) || '-' }}</td>
-                    <td>{{ formatNumber(item.objective_value ?? item.fx) || '-' }}</td>
-                    <td>{{ formatNumber(item.gradient_norm) || '-' }}</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-
+              <div v-if="activeView === 'convergence'" class="visual-stage">
+                <ConvergenceChart :data="result"/>
+              </div>
             <div v-else class="table-placeholder">
               Nenhuma iteração recebida da API.
             </div>
