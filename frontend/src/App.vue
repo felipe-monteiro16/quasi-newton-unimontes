@@ -37,11 +37,7 @@ const statusLabel = computed(() => {
 
 const solutionDisplay = computed(() => {
   const point =
-    result.value?.solution ??
-    result.value?.final_point ??
-    result.value?.x ??
-    result.value?.point
-
+    result.value?.X_otimo
   if (!Array.isArray(point) || point.length < 2) {
     return '-'
   }
@@ -50,14 +46,14 @@ const solutionDisplay = computed(() => {
 })
 
 const objectiveDisplay = computed(() => {
-  const value = result.value?.objective_value ?? result.value?.fx ?? result.value?.f
+  const value = result.value?.f_otimo
   const formatted = formatNumber(value)
 
   return formatted ? `f(x*) = ${formatted}` : '-'
 })
 
 const iterationsCount = computed(() => {
-  const count = result.value?.iterations_count ?? iterations.value.length
+  const count = result.value?.numero_iteracoes
 
   return count || '-'
 })

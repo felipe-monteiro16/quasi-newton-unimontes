@@ -20,7 +20,7 @@ def main() -> int:
         initial_points=INITIAL_POINTS, tol=ERROR_THRESHOLD, max_iter=N_ITER
     )
     with open("./optimization_result.json", "w") as json_file:
-        json.dump(result_dict, json_file)
+        json.dump(result_dict, json_file, indent=4)
     return 0
 
 
