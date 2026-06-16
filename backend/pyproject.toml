@@ -3,13 +3,19 @@ name = "nonlinear_optimization"
 version = "0.1.0"
 description = "An application that finds the minimum/maximum value of a function."
 authors = [
-    {name = "Davi"}
+    {name = "Davi"},
+    {name = "Felipe"}
 ]
-requires-python = ">=3.11"
+requires-python = "~=3.11"
 dependencies = [
     "numpy (>=2.4.4,<3.0.0)",
     "sympy (>=1.14.0,<2.0.0)",
     "jax (>=0.10.1,<0.11.0)",
+    "fastapi (>=0.137.1,<0.138.0)",
+    "uvicorn (>=0.49.0,<0.50.0)",
+    "pydantic (>=2.13.4,<3.0.0)",
+    "routes (>=2.5.1,<3.0.0)",
+    "typer (>=0.26.7,<0.27.0)",
 ]
 
 
@@ -17,6 +23,8 @@ dependencies = [
 requires = ["poetry-core>=2.0.0,<3.0.0"]
 build-backend = "poetry.core.masonry.api"
 
+[tool.poetry]
+packages = [{include = "src"}]
 
 [dependency-groups]
 test = [

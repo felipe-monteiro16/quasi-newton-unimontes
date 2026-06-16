@@ -1,12 +1,14 @@
 """Nonlinear optimization entry point"""
 
 import json
+from pathlib import Path
 
-from nonlinear_optimization.methods import quasi_newton
+from methods import quasi_newton
 
 ERROR_THRESHOLD = 1e-64
 N_ITER = 100
 INITIAL_POINTS = [1e32, 2]
+
 
 
 def main() -> int:
@@ -19,8 +21,9 @@ def main() -> int:
     result_dict = quasi_newton(
         initial_points=INITIAL_POINTS, tol=ERROR_THRESHOLD, max_iter=N_ITER
     )
-    with open("./optimization_result.json", "w") as json_file:
-        json.dump(result_dict, json_file)
+    path = Path(__file__).resolve().parent / "optimization_result.json"
+    with open(path, "w") as json_file:
+        json.dump(result_dict, json_file, indent=4)
     return 0
 
 

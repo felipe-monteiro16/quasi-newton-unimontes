@@ -6,11 +6,11 @@ from typing import Any
 import numpy as np
 import numpy.typing as npt
 
-from nonlinear_optimization.functions import f_x, gradient
-
+from src.optimizer.functions import f_x, gradient
 
 @dataclass
 class OptimizationResult:
+    numero_iteracoes: int
     f_otimo: float
     X_otimo: list[float] = field(default_factory=list)
     X_iteracoes: list[npt.NDArray[np.float64]] = field(default_factory=list)
@@ -37,6 +37,7 @@ def quasi_newton(
     gradk = gradient(xk)
 
     result = OptimizationResult(
+        numero_iteracoes=0,
         X_otimo=xk.tolist(),
         f_otimo=float("inf"),
         X_iteracoes=[xk.tolist()],
@@ -44,6 +45,7 @@ def quasi_newton(
     )
 
     for k in range(max_iter):
+        result.numero_iteracoes += 1
         if np.linalg.norm(gradk) < tol:
             print(f"Convergiu em {k} iterações")
             result.X_otimo = deepcopy(xk.tolist())
