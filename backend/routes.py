@@ -5,7 +5,7 @@ Recebe requisições, chama o algoritmo e retorna a resposta.
 """
 from fastapi import APIRouter
 from pydantic import BaseModel
-from algorithm.src.nonlinear_optimization.methods import quasi_newton
+from src.optimizer.methods import quasi_newton
 
 router = APIRouter()
 

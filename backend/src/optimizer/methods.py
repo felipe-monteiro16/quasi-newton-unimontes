@@ -6,7 +6,7 @@ from typing import Any
 import numpy as np
 import numpy.typing as npt
 
-from algorithm.src.nonlinear_optimization.functions import f_x, gradient
+from src.optimizer.functions import f_x, gradient
 
 @dataclass
 class OptimizationResult:

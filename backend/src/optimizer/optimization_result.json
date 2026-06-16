@@ -1,4 +1,5 @@
 {
+    "numero_iteracoes": 10,
     "f_otimo": 150.0,
     "X_otimo": [
         5.7,

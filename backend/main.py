@@ -7,8 +7,10 @@ import uvicorn
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from routes import router
+from typer import Typer
 
 app = FastAPI()
+cli = Typer()
 
 app.add_middleware(
     CORSMiddleware,
@@ -20,5 +22,10 @@ app.add_middleware(
 
 app.include_router(router)
 
-if __name__ == "__main__":
+@cli.command()
+def run():
     uvicorn.run("main:app", host="127.0.0.1", port=8000, reload=True)
+
+
+if __name__ == "__main__":
+    cli()
