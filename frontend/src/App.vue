@@ -1,7 +1,7 @@
 <script setup>
 import { computed, reactive, ref } from 'vue'
 import { runQuasiNewton } from './services/optimizerApi'
-import { ConvergenceChart } from './components'
+import { ConvergenceChart, ConvergenceTable } from './components'
 
 const initialForm = {
   objectiveFunction: 'x₁² + 2x₂² - 2x₁x₂ + 4x₁ - 6x₂',
@@ -406,6 +406,9 @@ function resetForm() {
             <h3>{{ chartTitle }}</h3>
               <div v-if="activeView === 'convergence'" class="visual-stage">
                 <ConvergenceChart :data="result"/>
+              </div>
+              <div v-else-if="iterations.length > 0" class="table-wrap">
+                  <ConvergenceTable :dados="result"/>
               </div>
             <div v-else class="table-placeholder">
               Nenhuma iteração recebida da API.
