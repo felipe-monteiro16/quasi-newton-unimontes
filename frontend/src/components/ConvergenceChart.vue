@@ -34,10 +34,14 @@ function render() {
     {
       title: 'Convergência',
       xaxis: {
-        title: 'Iteração'
+        title: {
+          text: 'Iteração'
+        }
       },
       yaxis: {
-        title: 'f(x)'
+        title: {
+          text: 'f(x)'
+        }
       }
     },
     {
