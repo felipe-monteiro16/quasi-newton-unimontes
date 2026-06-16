@@ -73,7 +73,7 @@ quasi-newton-unimontes/
 
 1. **Clone o repositório**
    ```bash
-   git clone <seu-repositorio>
+   git clone https://github.com/felipe-monteiro16/quasi-newton-unimontes.git
    cd quasi-newton-unimontes
    ```
 
