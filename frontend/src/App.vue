@@ -1,10 +1,10 @@
 <script setup>
 import { computed, reactive, ref } from 'vue'
 import { runQuasiNewton } from './services/optimizerApi'
-import { ConvergenceChart, ConvergenceTable } from './components'
+import { ConvergenceChart, ConvergenceTable, SurfaceChart } from './components'
 
 const initialForm = {
-  objectiveFunction: 'x₁² + 2x₂² - 2x₁x₂ + 4x₁ - 6x₂',
+  objectiveFunction: 'x1^2 + 2*x2^2 - 2*x1*x2 + 4*x1 - 6*x2',
   x1: '0',
   x2: '0',
   tolerance: '0.0001',
@@ -404,7 +404,10 @@ function resetForm() {
 
           <article class="chart-card">
             <h3>{{ chartTitle }}</h3>
-              <div v-if="activeView === 'convergence'" class="visual-stage">
+              <div v-if="activeView === 'surface' && result" class="visual-stage">
+                  <SurfaceChart :function="form.objectiveFunction"/>
+              </div>
+              <div v-else-if="activeView === 'convergence'" class="visual-stage">
                 <ConvergenceChart :data="result"/>
               </div>
               <div v-else-if="iterations.length > 0" class="table-wrap">
