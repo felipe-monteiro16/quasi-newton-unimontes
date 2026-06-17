@@ -12,7 +12,10 @@ const props = defineProps({
     type: String,
     required: true
   },
-
+  mode: {
+    type: String,
+    default: 'surface'
+  },
   xMin: {
     type: Number,
     default: -10
@@ -80,7 +83,7 @@ function PlotSurface() {
 
     const data = [
       {
-        type: 'surface',
+        type: props.mode,
         x,
         y,
         z,
@@ -89,7 +92,9 @@ function PlotSurface() {
         
         contours: {
           z: {
-            show: false,
+            show: props.mode == "contour",
+            coloring: 'lines',
+            showlabels: true,
             project: {
               z: true
             }
