@@ -407,6 +407,9 @@ function resetForm() {
               <div v-if="activeView === 'surface' && result" class="visual-stage">
                   <SurfaceChart :function="form.objectiveFunction"/>
               </div>
+              <div v-else-if="activeView === 'contour' && result" class="visual-stage">
+                  <SurfaceChart :function="form.objectiveFunction" :mode="'contour'"/>
+              </div>
               <div v-else-if="activeView === 'convergence'" class="visual-stage">
                 <ConvergenceChart :data="result"/>
               </div>
