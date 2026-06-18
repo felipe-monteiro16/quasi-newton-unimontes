@@ -65,16 +65,25 @@ function formatNumber(value) {
 }
 
 table {
-  background-color: white;
+  background-color: #ffff;
   width: 100%;
   border-collapse: collapse;
 }
 
 th, td {
-  color: black;
   padding: 12px;
   font-weight: 800;
   text-align: center;
+}
+
+td {
+  border-color: #aba4a4;
+  color:#4a5056;
+}
+
+th {
+  background-color: #2b50b5;
+  color: #ffff;
 }
 
 thead {
@@ -84,5 +93,17 @@ thead {
 .table-placeholder {
   text-align: center;
   padding: 24px;
+}
+
+table tbody tr:nth-child(odd) {
+  background-color: #f8fafc;
+}
+
+table tbody tr:nth-child(even) {
+  background-color: #e2e8f0;;
+}
+
+table tbody tr:hover {
+  background-color: #d6eaf8;
 }
 </style>
