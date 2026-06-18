@@ -8,18 +8,18 @@ import { ref, watch, onMounted } from 'vue'
 
 const props = defineProps({
   data: Object
-})
+});
 
-const chart = ref(null)
+const chart = ref(null);
 
 function render() {
 
-  if (!props.data) return
-  if (!Array.isArray(props.data.f_iteracoes)) return
+  if (!props.data) return;
+  if (!Array.isArray(props.data.f_iteracoes)) return;
 
   const iteracoes = props.data.f_iteracoes.map(
     (_, i) => i + 1
-  )
+  );
 
   Plotly.newPlot(
     chart.value,
@@ -35,12 +35,20 @@ function render() {
       title: 'Convergência',
       xaxis: {
         title: {
-          text: 'Iteração'
+          text: 'Iteração',
+          font: {
+            size: 15,
+            weight: 800
+          }
         }
       },
       yaxis: {
         title: {
-          text: 'f(x)'
+          text: 'F(x)',
+          font: {
+            size: 15,
+            weight: 800
+          }
         }
       }
     },
@@ -48,7 +56,7 @@ function render() {
       responsive: true,
       displayModeBar: false
     }
-  )
+  );
 }
 
 onMounted(() => {
@@ -59,7 +67,7 @@ watch(
   () => props.data,
   render,
   {}
-)
+);
 
 </script>
 
