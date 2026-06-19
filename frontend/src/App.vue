@@ -413,15 +413,15 @@ function resetForm() {
               <div v-else-if="activeView === 'trajectory' && result" class="visual-stage">
                 <TrajectoryChart :function="form.objectiveFunction" :optimizationData="result"/>
               </div>
-              <div v-else-if="activeView === 'convergence'" class="visual-stage">
+              <div v-else-if="activeView === 'convergence' && result" class="visual-stage">
                 <ConvergenceChart :data="result"/>
               </div>
-              <div v-else-if="iterations.length > 0" class="table-wrap">
+              <div v-else-if="activeView == 'table' && iterations.length > 0 && result" class="table-wrap">
                 <ConvergenceTable :dados="result"/>
               </div>
-            <div v-else class="table-placeholder">
-              Nenhuma iteração recebida da API.
-            </div>
+              <div v-else class="table-placeholder">
+                Nenhuma iteração recebida da API.
+              </div>
           </article>
         </section>
       </main>
