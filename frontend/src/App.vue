@@ -106,8 +106,8 @@ const chartTitle = computed(() => {
 
 const criterionLabels = {
   gradient_norm: '||∇f(x)|| < ε',
-  step_difference: '||xₖ₊₁ - xₖ|| < ε',
-  objective_difference: '|f(xₖ₊₁) - f(xₖ)| < ε',
+  // step_difference: '||xₖ₊₁ - xₖ|| < ε',
+  // objective_difference: '|f(xₖ₊₁) - f(xₖ)| < ε',
 }
 
 const canSubmit = computed(() => {
@@ -250,8 +250,8 @@ function resetForm() {
             <span>Critério de Parada</span>
             <select v-model="form.stoppingCriterion" name="stoppingCriterion">
               <option value="gradient_norm">||∇f(x)|| &lt; ε</option>
-              <option value="step_difference">||xₖ₊₁ - xₖ|| &lt; ε</option>
-              <option value="objective_difference">|f(xₖ₊₁) - f(xₖ)| &lt; ε</option>
+              <!-- <option value="step_difference">||xₖ₊₁ - xₖ|| &lt; ε</option>
+              <option value="objective_difference">|f(xₖ₊₁) - f(xₖ)| &lt; ε</option> -->
             </select>
           </label>
 

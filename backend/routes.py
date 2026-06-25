@@ -4,19 +4,21 @@ Define os endpoints da API.
 Recebe requisições, chama o algoritmo e retorna a resposta.
 """
 from fastapi import APIRouter
-from pydantic import BaseModel, Field, ConfigDict
+from pydantic import BaseModel, Field, ConfigDict, field_validator
 from src.optimizer.methods import quasi_newton
+from src.optimizer.functions import InvalidObjectiveFunctionError
+from fastapi.exceptions import HTTPException
+
 
 router = APIRouter()
 
 class OptimizeRequest(BaseModel):
     """Modelo para a entrada o end-point optimize"""
-    objective_function: str # atualmente não usado
+    objective_function: str
     initial_point: list
     tolerance: float
     stopping_criterion: str # atualmente não usado
     max_iterations: int
-
 
 
 class OptimizationResponse(BaseModel):
@@ -64,14 +66,18 @@ class OptimizationResponse(BaseModel):
 )
 async def optimize(payload: OptimizeRequest):
     """Execução do Algoritmo Quasi-Newton"""
-    result_dict = quasi_newton(
-        initial_points=payload.initial_point,
-        tol=payload.tolerance,
-        max_iter=payload.max_iterations
-    )
-
-    return result_dict
-
+    try:
+        result_dict = quasi_newton(
+            initial_points=payload.initial_point,
+            funcao_string=payload.objective_function,
+            tol=payload.tolerance,
+            max_iter=payload.max_iterations
+        )
+        return result_dict
+    except InvalidObjectiveFunctionError as exc:
+        raise HTTPException(status_code=400, detail=str(exc))
+    except ValueError as exc:
+        raise HTTPException(status_code=400, detail=str(exc))
 
 @router.get('/')
 def main():
