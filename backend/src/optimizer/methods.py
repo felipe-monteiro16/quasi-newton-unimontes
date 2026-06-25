@@ -18,7 +18,7 @@ class OptimizationResult:
 
 
 def quasi_newton(
-    initial_points: Iterable[float], tol: float = 1e-6, max_iter: int = 10
+    initial_points: Iterable[float], funcao_string: str, tol: float = 1e-6, max_iter: int = 10
 ) -> dict[str, Any]:
     """Busca o mínimo de uma dada função a partir do algoritmo BFGS Quasi-Newton.
 
@@ -30,11 +30,11 @@ def quasi_newton(
     Returns:
         o valor ótimo da função objetivo, os pontos x1 e x2 correspondentes, os valores, em suas respectivas listas, dos pontos e da função objetivo em cada ponto.
     """
-    _, _, _, equation = f_x()
+    _, _, _, equation = f_x(funcao_string)
     xk = np.asarray(initial_points, dtype=np.float64)
     n = xk.size
     hinv_aprox = np.eye(n)  # Inversa da hessiana inicial
-    gradk = gradient(xk)
+    gradk = gradient(xk, funcao_string)
 
     result = OptimizationResult(
         numero_iteracoes=0,
@@ -66,7 +66,7 @@ def quasi_newton(
 
         # Atualização de posição e gradiente
         xk_new = xk + alpha * direction.reshape(2)
-        grad_new = gradient(xk_new)
+        grad_new = gradient(xk_new, funcao_string)
         s = xk_new - xk
         y = grad_new - gradk
 
